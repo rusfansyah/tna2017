@@ -135,7 +135,7 @@
               <!-- /.panel -->
               <div class="panel panel-default">
                   <div class="panel-heading">
-                      <i class="fa fa-bar-chart-o fa-fw"></i> Grafik Jumlah Guru
+                      <i class="fa fa-bar-chart-o fa-fw"></i> Grafik Jumlah Guru Seni Budaya
                       {{-- <div class="pull-right">
                           <div class="btn-group">
                               <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
