@@ -5,12 +5,13 @@
 @endif
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading"><span class="fa fa-street-view fa-2x"></span> JUMLAH GURU PER JENJANG</div>
         <div class="panel-body">
-          {{-- <table>
-             <tr>
+          <table>
+            {{-- <tr>
+
               <td>&nbsp;</td>
               <td>
                 <button class="btn btn-primary btn-md" onclick="window.location = '/guru/excel/'">
@@ -25,22 +26,26 @@
               </td>
               <td>&nbsp;</td>
               </div>
-            </tr>
+            </tr> --}}
             <tr>
               <td>&nbsp;</td>
             </tr>
-          </table>--}}
+          </table>
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
                 <td>JENJANG</td>
+                <td>KATEGORI TNA</td>
+                <td>KOMPETENSI</td>
                 <td>JUMLAH GURU</td>
               </tr>
             </thead>
             <tbody>
               @foreach ($guru as $guru)
               <tr>
-                <td>{{$guru->jenjang}}</td>
+                <td>{{$guru->jenjang_sekolah}}</td>
+                <td>{{$guru->kategori_tna}}</td>
+                <td>{{$guru->hasil_akhir}}</td>
                 <td>{{$guru->jumlah}}</td>
               </tr>
               @endforeach

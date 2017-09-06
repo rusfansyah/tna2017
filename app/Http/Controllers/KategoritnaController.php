@@ -20,7 +20,7 @@ class KategoritnaController extends Controller
 
   public function store(Request $request){
     $this->validate($request,[
-      'kategori_tna'       =>  'required',
+      'kategori_tna'       =>  'required|unique:kategori_tna,kategori_tna,NULL,id,jenjang_id,' . $request->jenjang_id,
       'jenjang_id'         =>  'required'
     ]);
 

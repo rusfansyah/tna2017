@@ -21,7 +21,7 @@ class JenjangController extends Controller
 
   public function store(Request $request){
     $this->validate($request,[
-    'jenjang_sekolah' =>  'required'
+    'jenjang_sekolah' =>  'required|unique:jenjang,jenjang_sekolah'
 
     ]);
     $jenjang=new Jenjang;

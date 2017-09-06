@@ -5,7 +5,7 @@
 @endif
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading"><span class="fa fa-file-text-o fa-2x"></span> Laporan Hasil Kompetensi</div>
         <div class="panel-body">
@@ -35,26 +35,29 @@
             <thead>
               <tr>
                 <th>NAMA</th>
+                <th>JENJANG SEKOLAH</th>
                 <th>KATEGORI TNA</th>
-                <th>NILAI TOTAL</th>
+                <th>HASIL TNA</th>
               </tr>
             </thead>
             <tbody>
-              @foreach ($hasiltnas as $hasiltna)
+              {{-- pakai cara join (agak panjang skripnya) --}}
+              {{-- @foreach ($hasiltnas as $hasiltna)
               <tr>
                   <td>{{$hasiltna->nama}}</td>
+                  <td>{{$hasiltna->jenjang_sekolah}}</td>
                   <td>{{$hasiltna->kategori_tna}}</td>
-                  <td>
-                    @if ($hasiltna->hasil_tna <60)
-                      Tidak Kompeten
-                    @elseif ($hasiltna->hasil_tna <75)
-                      Kurang Kompeten
-                    @elseif ($hasiltna->hasil_tna <85)
-                      Kompeten
-                    @else
-                      Sangat Kompeten
-                    @endif
-                  </td>
+                  <td>{{$hasiltna->hasil_akhir}}</td>
+              </tr>
+              @endforeach --}}
+
+              {{-- pakai cara ambil database langsung, utk relasi pada bladenya (lebih simple) --}}
+              @foreach ($hasiltnas as $hasiltna)
+              <tr>
+                  <td>{{$hasiltna->guru->nama}}</td>
+                  <td>{{$hasiltna->guru->jenjang->jenjang_sekolah}}</td>
+                  <td>{{$hasiltna->kategori_tna->kategori_tna}}</td>
+                  <td>{{$hasiltna->hasil_akhir}}</td>
               </tr>
               @endforeach
             </tbody>

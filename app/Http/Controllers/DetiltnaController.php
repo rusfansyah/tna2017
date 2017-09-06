@@ -20,7 +20,7 @@ class DetiltnaController extends Controller
 
     public function store(Request $request){
       $this->validate($request,[
-        'detil_tna'              =>  'required',
+        'detil_tna'              =>  'required|unique:detil_tna,detil_tna,NULL,id,kategori_tna_id,' . $request->kategori_tna_id,
         'kategori_tna_id'        =>  'required'
 
       ]);

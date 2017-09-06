@@ -10,6 +10,8 @@ use PDF;
 use App\Guru;
 use App\Jenjang;
 use App\Mapel;
+use App\Kategoritna;
+use App\Detiltna;
 
 class GuruController extends Controller
 {
@@ -32,11 +34,11 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-        'nama'              =>  'required|Alpha',
+        'nama'              =>  "required|regex:/^[a-zA-Z .'?]*$/",
         'jenkel'            =>  'required',
-        'nopes'             =>  'required|digits:12|numeric',
-        'nuptk'             =>  'required|digits:16|numeric',
-        'nip'               =>  'required|digits:18|numeric',
+        'nopes'             =>  'required|unique:guru,nopes|digits:12|numeric',
+        'nuptk'             =>  'required|unique:guru,nuptk|digits:16|numeric',
+        'nip'               =>  'required|unique:guru,nip|digits:18|numeric',
         'handphone'         =>  'required|numeric',
         'tempat_lahir'      =>  'required',
         'tanggal_lahir'     =>  'required|date_format:Y/m/d',
@@ -72,34 +74,36 @@ class GuruController extends Controller
     {
         $guru=Guru::find($id);
         $jenjang=Jenjang::all();
-        // dd($guru);
-        return view('guru/edit', ['guru'=>$guru, 'jenjang'=>$jenjang]);
+        $detiltna=DB::select(DB::raw("SELECT guru.id,detil_tna.id,detil_tna.detil_tna,nilai_tna.nilai_tna,kategori_tna.kategori_tna FROM guru INNER JOIN jenjang ON guru.jenjang_id = jenjang.id INNER JOIN kategori_tna ON kategori_tna.jenjang_id = jenjang.id INNER JOIN detil_tna ON detil_tna.kategori_tna_id = kategori_tna.id INNER JOIN nilai_tna ON nilai_tna.detil_tna_id = detil_tna.id AND nilai_tna.guru_id = guru.id WHERE guru.id = ".$id));
+        // dd($detiltna);
+        return view('guru/edit', ['guru'=>$guru, 'jenjang'=>$jenjang, 'detiltna'=>$detiltna]);
     }
 
     public function show($id)
     {
         $guru=Guru::find($id);
-        $jenjang=Jenjang::all();
-        // $mapel=Mapel::where('guru_id',107);
-        $mapel = DB::select(DB::raw("select * from mapel where guru_id='.$id.'"));
-        $diklat_ikut = DB::select(DB::raw("select * from diklat_ikut where guru_id='.$id.'"));
-        $diklat_butuh = DB::select(DB::raw("select * from diklat_butuh where guru_id='.$id.'"));
+        // $jenjang=Jenjang::all();
+        // // $mapel=Mapel::where('guru_id',107);
+        // $mapel = DB::select(DB::raw("select * from mapel where guru_id='".$id."'"));
+        // $diklat_ikut = DB::select(DB::raw("select * from diklat_ikut where guru_id='".$id."'"));
+        // $diklat_butuh = DB::select(DB::raw("select * from diklat_butuh where guru_id='".$id."'"));
         // dd($diklat_ikut);
-        return view('guru/single', ['guru'=>$guru, 'jenjang'=>$jenjang, 'mapel'=>$mapel, 'diklat_ikut'=>$diklat_ikut, 'diklat_butuh'=>$diklat_butuh]);
+        // return view('guru/single', ['guru'=>$guru, 'jenjang'=>$jenjang, 'mapel'=>$mapel, 'diklat_ikut'=>$diklat_ikut, 'diklat_butuh'=>$diklat_butuh]);
+        return view('guru/single', ['guru'=>$guru]);
     }
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-        'nama'              =>  'required|Alpha',
+        'nama'              =>  "required|regex:/^[a-zA-Z .'?]*$/",
         'jenkel'            =>  'required',
-        // 'nopes'             =>  'required|digits:12|numeric',
-        // 'nuptk'             =>  'required|digits:16|numeric',
-        // 'nip'               =>  'required|digits:18|numeric',
+        'nopes'             =>  'required|digits:12|numeric',
+        'nuptk'             =>  'required|digits:16|numeric',
+        'nip'               =>  'required|digits:18|numeric',
         'handphone'         =>  'required|numeric',
         'tempat_lahir'      =>  'required',
         // 'tanggal_lahir'     =>  'required|date_format:Y/m/d',
         'tempat'            =>  'required',
-        'jenjang_id'        =>  'required',
+        // 'jenjang_id'        =>  'required',
         'alamat'            =>  'required',
         'kecamatan'         =>  'required',
         'kabupaten'         =>  'required',
@@ -116,7 +120,7 @@ class GuruController extends Controller
         $guru->handphone          = $request->handphone;
         $guru->tempat_lahir       = $request->tempat_lahir;
         $guru->tanggal_lahir      = $request->tanggal_lahir;
-        $guru->jenjang_id         = $request->jenjang_id;
+        // $guru->jenjang_id         = $request->jenjang_id;
         $guru->tempat             = $request->tempat;
         $guru->alamat             = $request->alamat;
         $guru->kecamatan          = $request->kecamatan;

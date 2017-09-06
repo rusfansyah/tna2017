@@ -121,7 +121,7 @@
                                  <li><a href="/lap_hasil/jumlahgurujenjang"><span class="fa fa-address-card-o"></span> Laporan Jumlah Guru per Jenjang</a></li>
                                  <li><a href="/lap_hasil/jumlahgurukompetensi"><span class="fa fa-address-card-o"></span> Laporan Jumlah Guru per Kompetensi</a></li>
                                  <li><a href="/lap_hasil"><span class="fa fa-file-text-o"></span>   Laporan Hasil TNA</a></li>
-                                 <li><a href="/lap_hasil"><span class="fa fa-file-text-o"></span>   Laporan Hasil TNA</a></li>
+
                                  <li role="separator" class="divider"></li>
                                  <li><a href="/guru/grafik"><span class="fa fa-bar-chart"></span> Grafik Jumlah Guru per Jenjang</a></li>
                                  <li><a href="/lap_hasil/mapel"><span class="fa fa-bar-chart"></span> Grafik Jumlah Guru per Mapel yang diampu</a></li>
@@ -149,7 +149,7 @@
                             <li><a href="{{ url('/login') }}">Login</a></li>
                         @else
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="fa fa-user"></span>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -194,6 +194,11 @@
         });
       });
       </script>
+      <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright © 2017 Rusfansyah - P4TK Seni dan Budaya Yogyakarta</p>
+      </div>
+    </footer>
 
 </body>
 </html>

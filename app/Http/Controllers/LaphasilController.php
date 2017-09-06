@@ -14,11 +14,17 @@ class LaphasilController extends Controller
     //
     public function index()
     {
-      $hasiltna = DB::table('hasil_tna')
-      ->join('kategori_tna', 'hasil_tna.kategori_tna_id', '=', 'kategori_tna.id')
-      ->join('guru', 'hasil_tna.guru_id', '=', 'guru.id')
-      ->select('guru.nama','kategori_tna.kategori_tna','hasil_tna.hasil_tna')
-      ->paginate(10);
+      // pakai cara join (agak panjang skripnya)
+      // $hasiltna = DB::table('hasil_tna')
+      // ->join('kategori_tna', 'hasil_tna.kategori_tna_id', '=', 'kategori_tna.id')
+      // ->join('guru', 'hasil_tna.guru_id', '=', 'guru.id')
+      // ->join('jenjang', 'guru.jenjang_id', '=', 'jenjang.id')
+      // ->select('guru.nama','jenjang.jenjang_sekolah','kategori_tna.kategori_tna','hasil_tna.hasil_tna','hasil_tna.hasil_akhir')
+      // ->orderBy('guru.id')
+      // ->paginate(8);
+
+      // pakai cara ambil database langsung, utk relasi pada bladenya (lebih simple)
+      $hasiltna=Hasiltna::orderBy('guru_id')->paginate(8);
       return view('lap_hasil/home',['hasiltnas'=>$hasiltna]);
     }
 
@@ -35,25 +41,28 @@ class LaphasilController extends Controller
           {
             $row = 1;
             $sheet->row($row,
-            ['NAMA','KATEGORI TNA','NILAI TOTAL']);
+            ['NAMA','JENJANG','KATEGORI TNA','HASIL TNA']);
             foreach ($hasiltna as $hasiltna)
             {
-              $kompetensi="";
-              if ($hasiltna->hasil_tna <60)
-                $kompetensi="Tidak Kompeten";
-              elseif  ($hasiltna->hasil_tna <75)
-                $kompetensi="Kurang Kompeten";
-              elseif  ($hasiltna->hasil_tna <85)
-                $kompetensi="Kompeten";
-              else
-                $kompetensi="Sangat Kompeten";
+              // jika penilaian pakai if
+              // $kompetensi="";
+              // if ($hasiltna->hasil_tna <60)
+              //   $kompetensi="Tidak Kompeten";
+              // elseif  ($hasiltna->hasil_tna <75)
+              //   $kompetensi="Kurang Kompeten";
+              // elseif  ($hasiltna->hasil_tna <85)
+              //   $kompetensi="Kompeten";
+              // else
+              //   $kompetensi="Sangat Kompeten";
 
 
               $sheet->row(++$row,
               [
                 $hasiltna->guru->nama,
+                $hasiltna->guru->jenjang->jenjang_sekolah,
                 $hasiltna->kategori_tna->kategori_tna,
-                $kompetensi
+                $hasiltna->hasil_akhir
+                // $kompetensi
                 // $hasiltna->hasil_tna
               ]
               );
@@ -113,6 +122,13 @@ class LaphasilController extends Controller
       $guru = DB::select(DB::raw("SELECT jenjang.jenjang_sekolah as jenjang, Count(jenjang.jenjang_sekolah) as jumlah FROM guru INNER JOIN jenjang ON guru.jenjang_id = jenjang.id GROUP BY jenjang.jenjang_sekolah"));
       return view('/lap_hasil/jumlahgurujenjang', ['guru'=>$guru]);
       }
+
+      public function jumlahgurukompetensi()
+      {
+        $guru = DB::select(DB::raw("SELECT jenjang.jenjang_sekolah, kategori_tna.kategori_tna, hasil_tna.hasil_akhir, Count(hasil_tna.hasil_akhir) AS jumlah FROM hasil_tna INNER JOIN kategori_tna ON hasil_tna.kategori_tna_id = kategori_tna.id INNER JOIN jenjang ON kategori_tna.jenjang_id = jenjang.id GROUP BY jenjang.jenjang_sekolah, kategori_tna.kategori_tna, hasil_tna.hasil_akhir "));
+        // dd($guru);
+        return view('/lap_hasil/jumlahgurukompetensi', ['guru'=>$guru]);
+        }
 
 
 }

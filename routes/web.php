@@ -47,6 +47,7 @@ Route::put('/detil_tna/{id}','DetiltnaController@update');
 
 //route mapel
 Route::post('/mapel','MapelController@store');
+Route::put('/mapel/{id}','MapelController@update');
 
 //route nilai_tna
 // Route::post('/nilai_tna','Nilaitna@store');
@@ -62,8 +63,9 @@ Route::get('/lap_hasil/mapel_butuh','LaphasilController@grafikMapelButuh');
 Route::get('/lap_hasil/mapel_ikut','LaphasilController@grafikMapelIkut');
 Route::get('/lap_hasil/guru','LaphasilController@guru');
 Route::get('/lap_hasil/jumlahgurujenjang','LaphasilController@jumlahGuruJenjang');
+Route::get('/lap_hasil/jumlahgurukompetensi','LaphasilController@jumlahGuruKompetensi');
 
-//untuk cek query pada model
+//untuk cek query
 Route::get('/testmodel', function() {
 $query =  DB::select(DB::raw("SELECT jenjang.jenjang_sekolah as jenjang, Count(jenjang.jenjang_sekolah) as jumlah FROM guru INNER JOIN jenjang ON guru.jenjang_id = jenjang.id GROUP BY jenjang.jenjang_sekolah"));
 return $query;

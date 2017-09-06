@@ -65,7 +65,7 @@ return [
     'not_in'               => 'The selected :attribute is invalid.',
     'numeric'              => ' :attribute harus angka.',
     'present'              => 'The :attribute field must be present.',
-    'regex'                => 'The :attribute format is invalid.',
+    'regex'                => ':attribute terdapat kesalahan. Hanya menerima huruf, spasi dan petik satu',
     'required'             => ':attribute harus diisi.',
     'required_if'          => ' :attribute harus diisi when :or is :value.',
     'required_unless'      => ' :attribute harus diisi unless :or is in :values.',
@@ -82,7 +82,7 @@ return [
     ],
     'string'               => 'The :attribute must be a string.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
+    'unique'               => ':attribute sudah ada.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
